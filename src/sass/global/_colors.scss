@@ -1,0 +1,59 @@
+:root {
+  --white: #fff;
+  --black: #000;
+  --brightBlue: hsl(220, 98%, 61%);
+  --checkBackground: linear-gradient(
+    to right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
+  --veryLightGray: hsl(0, 0%, 98%);
+  --veryLightGrayishBlue: hsl(236, 33%, 92%);
+  --lightGrayishBlue: hsl(233, 11%, 84%);
+  --darkGrayishBlue: hsl(236, 9%, 61%);
+  --veryDarkGrayishBlue: hsl(235, 19%, 35%);
+  --background: var(--lightGrayishBlue);
+  --todo-bg: var(--white);
+  --text-clr: var(--veryDarkGrayishBlue);
+  --border-clr: var(--lightGrayishBlue);
+}
+
+// Light theme
+.light {
+  --white: #fff;
+  --black: #000;
+  --veryLightGray: hsl(0, 0%, 98%);
+  --veryLightGrayishBlue: hsl(236, 33%, 92%);
+  --lightGrayishBlue: hsl(233, 11%, 84%);
+  --darkGrayishBlue: hsl(236, 9%, 61%);
+  --veryDarkGrayishBlue: hsl(235, 19%, 35%);
+  --background: var(--lightGrayishBlue);
+  --todo-bg: var(--white);
+  --text-clr: var(--veryDarkGrayishBlue);
+  --border-clr: var(--lightGrayishBlue);
+}
+
+// Dark theme
+.dark {
+  --veryDarkBlue: hsl(235, 21%, 11%);
+  --veryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+  --veryDarkGrayishBlue: hsl(233, 14%, 35%);
+  --white: #fff;
+  --background: var(--veryDarkBlue);
+  --todo-bg: var(--veryDarkDesaturatedBlue);
+  --text-clr: var(--white);
+  --border-clr: var(--veryDarkGrayishBlue);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --veryDarkBlue: hsl(235, 21%, 11%);
+    --veryDarkDesaturatedBlue: hsl(235, 24%, 19%);
+    --veryDarkGrayishBlue: hsl(233, 14%, 35%);
+    --white: #fff;
+    --background: var(--veryDarkBlue);
+    --todo-bg: var(--veryDarkDesaturatedBlue);
+    --text-clr: var(--white);
+    --border-clr: var(--veryDarkGrayishBlue);
+  }
+}
