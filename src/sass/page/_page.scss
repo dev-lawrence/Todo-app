@@ -15,18 +15,11 @@ body {
   height: rem(200);
   width: 100%;
 
-  &__bg {
-    background-image: url(../assets/bg-mobile-light.jpg);
-    @include bgImg(cover);
-    height: 100%;
+  img {
+    height: rem(200);
     width: 100%;
     transition: background-image 100ms linear;
   }
-}
-
-.header__bg.toggleBg {
-  background-image: url(../assets/images/bg-mobile-dark.jpg);
-  @include bgImg(cover);
 }
 
 // Main section

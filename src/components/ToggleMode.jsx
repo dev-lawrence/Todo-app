@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import iconMoon from '../assets/icon-moon.svg';
 import iconSun from '../assets/icon-sun.svg';
 
 const storeMode = localStorage.getItem('mode');
 
-const Darkmode = () => {
-  const [darkmode, setDarkMode] = useState(false);
-
+const Togglemode = ({ darkmode, setDarkMode }) => {
   const handleToggleMode = () => {
     if (!darkmode) {
       enableDarkMode();
@@ -44,4 +42,4 @@ const Darkmode = () => {
   );
 };
 
-export default Darkmode;
+export default Togglemode;

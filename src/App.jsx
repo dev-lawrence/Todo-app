@@ -1,11 +1,14 @@
-import Darkmode from './components/Darkmode';
+import { useState } from 'react';
+import ToggleBg from './components/ToggleBg';
+import Togglemode from './components/ToggleMode';
 import './sass/main.scss';
 
 function App() {
+  const [darkmode, setDarkMode] = useState(false);
   return (
     <>
       <header className="header">
-        <div className="header__bg"></div>
+        <ToggleBg darkmode={darkmode} />
       </header>
 
       <main className="main">
@@ -14,8 +17,7 @@ function App() {
             <a className="logo" href="#">
               Todo
             </a>
-            <Darkmode />
-            {/* <div className="toggle-switch"></div> */}
+            <Togglemode darkmode={darkmode} setDarkMode={setDarkMode} />
           </div>
 
           <div className="main__content">
