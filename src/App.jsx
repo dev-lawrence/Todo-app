@@ -39,7 +39,7 @@ function App() {
         {
           id: crypto.randomUUID(),
           name: name,
-          complete: false,
+          isComplete: false,
         },
       ];
     });
@@ -56,20 +56,20 @@ function App() {
   const handleToggleTodo = (id) => {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
-    todo.complete = !todo.complete;
+    todo.isComplete = !todo.isComplete;
     setTodos(newTodos);
   };
 
   // clear completed todos
   const handleClearCompletedTodos = () => {
-    setTodos(todos.filter((todo) => !todo.complete));
+    setTodos(todos.filter((todo) => !todo.isComplete));
   };
 
   const filterTodos = () => {
     if (filter === 'active') {
-      return todos.filter((todo) => !todo.complete);
+      return todos.filter((todo) => !todo.isComplete);
     } else if (filter === 'completed') {
-      return todos.filter((todo) => todo.complete);
+      return todos.filter((todo) => todo.isComplete);
     } else {
       return todos;
     }
