@@ -17,6 +17,7 @@ body {
 
   img {
     height: rem(200);
+    object-fit: cover;
     width: 100%;
     transition: background-image 100ms linear;
   }
@@ -181,12 +182,8 @@ body {
       }
 
       .cross {
-        background-image: url(../assets/icon-cross.svg);
-        @include bgImg(contain);
         cursor: pointer;
         margin-right: rem(16);
-        height: rem(17);
-        width: rem(17);
       }
 
       // Js styles

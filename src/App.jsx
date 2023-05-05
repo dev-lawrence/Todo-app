@@ -1,10 +1,80 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ToggleBg from './components/ToggleBg';
 import Togglemode from './components/ToggleMode';
+import TodoList from './components/TodoList';
 import './sass/main.scss';
+
+const LOCAL_STORAGE_KEY = 'mytodo.todos';
+
+// load the data
+const storedTodos = () => {
+  let showStoredTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (showStoredTodos) {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+  } else {
+    return [];
+  }
+};
 
 function App() {
   const [darkmode, setDarkMode] = useState(false);
+  const [todos, setTodos] = useState(storedTodos());
+  const [filter, setFilter] = useState('all');
+  const todoNameRef = useRef();
+
+  //  save the data when changes are made
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+  }, [todos]);
+
+  // add todo
+  const handleAddTodo = (e) => {
+    e.preventDefault();
+    const name = todoNameRef.current.value;
+    if (!name) return;
+
+    setTodos((prevTodos) => {
+      return [
+        ...prevTodos,
+        {
+          id: crypto.randomUUID(),
+          name: name,
+          complete: false,
+        },
+      ];
+    });
+
+    todoNameRef.current.value = null;
+  };
+
+  // remove todo
+  const handleRemoveTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  // toggle todo
+  const handleToggleTodo = (id) => {
+    const newTodos = [...todos];
+    const todo = newTodos.find((todo) => todo.id === id);
+    todo.complete = !todo.complete;
+    setTodos(newTodos);
+  };
+
+  // clear completed todos
+  const handleClearCompletedTodos = () => {
+    setTodos(todos.filter((todo) => !todo.complete));
+  };
+
+  const filterTodos = () => {
+    if (filter === 'active') {
+      return todos.filter((todo) => !todo.complete);
+    } else if (filter === 'completed') {
+      return todos.filter((todo) => todo.complete);
+    } else {
+      return todos;
+    }
+  };
+
   return (
     <>
       <header className="header">
@@ -23,29 +93,42 @@ function App() {
           <div className="main__content">
             <div className="place">
               <span className="circle"></span>
-              <form className="form">
+              <form onSubmit={handleAddTodo} className="form">
                 <input
                   className="item"
                   type="text"
                   placeholder="Create a new todo..."
+                  ref={todoNameRef}
                 />
 
-                <input type="submit" value="+" className="plus" />
+                <input
+                  onClick={handleAddTodo}
+                  type="submit"
+                  value="+"
+                  className="plus"
+                />
               </form>
             </div>
 
-            {/* <!-- todos --> */}
-            <ul className="todos"></ul>
+            {/* <!-- todos use todo as the classname --> */}
+            <TodoList
+              todos={todos}
+              handleRemoveTodo={handleRemoveTodo}
+              handleToggleTodo={handleToggleTodo}
+              filterTodos={filterTodos}
+            />
 
             <div className="info">
               <div className="items-left">
-                <span>0</span> items left
+                <span>{todos.length}</span> items left
               </div>
-              <span className="clear">Clear Completed</span>
+              <span onClick={handleClearCompletedTodos} className="clear">
+                Clear Completed
+              </span>
             </div>
 
             <div className="filter-todo">
-              <label>
+              <label onClick={() => setFilter('all')}>
                 <input
                   type="radio"
                   name="filter"
@@ -54,11 +137,11 @@ function App() {
                 />
                 <span>All</span>
               </label>
-              <label>
+              <label onClick={() => setFilter('active')}>
                 <input type="radio" name="filter" className="active" />
                 <span>Active</span>
               </label>
-              <label>
+              <label onClick={() => setFilter('completed')}>
                 <input type="radio" name="filter" className="completed" />
                 <span>Completed</span>
               </label>
