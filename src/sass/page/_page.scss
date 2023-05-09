@@ -120,6 +120,7 @@ body {
     margin-top: rem(18);
     background-color: var(--todo-bg);
     border-radius: rem(4.8);
+    // user-select: none;
 
     .todo {
       @include flex(space-between);

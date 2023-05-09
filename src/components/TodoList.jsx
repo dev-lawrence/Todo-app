@@ -1,21 +1,28 @@
 import Todo from './Todo';
 
 const TodoList = ({
-  todos,
   handleRemoveTodo,
   handleToggleTodo,
   filterTodos,
+  handleDragStart,
+  handleDragOver,
+  handleDrop,
+  handleDragEnd,
 }) => {
   return (
     <>
       <ul className="todos">
-        {filterTodos(todos).map((todo) => {
+        {filterTodos().map((todo) => {
           return (
             <Todo
               key={todo.id}
               todo={todo}
               handleRemoveTodo={handleRemoveTodo}
               handleToggleTodo={handleToggleTodo}
+              handleDragStart={handleDragStart}
+              handleDragOver={handleDragOver}
+              handleDrop={handleDrop}
+              handleDragEnd={handleDragEnd}
             />
           );
         })}

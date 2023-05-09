@@ -6,9 +6,10 @@ import './sass/main.scss';
 
 const LOCAL_STORAGE_KEY = 'mytodo.todos';
 
-// load the data
+// load the todos to UI
 const storedTodos = () => {
   let showStoredTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
+
   if (showStoredTodos) {
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
   } else {
@@ -20,6 +21,7 @@ function App() {
   const [darkmode, setDarkMode] = useState(false);
   const [todos, setTodos] = useState(storedTodos());
   const [filter, setFilter] = useState('all');
+  const [draggedTodo, setDraggedTodo] = useState(null);
   const todoNameRef = useRef();
 
   //  save the data when changes are made
@@ -28,8 +30,8 @@ function App() {
   }, [todos]);
 
   // add todo
-  const handleAddTodo = (e) => {
-    e.preventDefault();
+  const handleAddTodo = (event) => {
+    event.preventDefault();
     const name = todoNameRef.current.value;
     if (!name) return;
 
@@ -65,6 +67,7 @@ function App() {
     setTodos(todos.filter((todo) => !todo.isComplete));
   };
 
+  // function to filter todos
   const filterTodos = () => {
     if (filter === 'active') {
       return todos.filter((todo) => !todo.isComplete);
@@ -73,6 +76,38 @@ function App() {
     } else {
       return todos;
     }
+  };
+
+  // handle drag start
+  const handleDragStart = (event, todo) => {
+    setDraggedTodo(todo);
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', JSON.stringify(todo));
+  };
+
+  // handle drag over
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  };
+
+  // handle drop
+  const handleDrop = (event, targetTodo) => {
+    event.preventDefault();
+    const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+    if (data.id !== targetTodo.id) {
+      const targetIndex = todos.findIndex((t) => t.id === targetTodo.id);
+      const draggedIndex = todos.findIndex((t) => t.id === data.id);
+      const newTodos = [...todos];
+      newTodos.splice(draggedIndex, 1);
+      newTodos.splice(targetIndex, 0, data);
+      setTodos(newTodos);
+    }
+  };
+
+  // handle drag end
+  const handleDragEnd = () => {
+    setDraggedTodo(null);
   };
 
   return (
@@ -116,6 +151,11 @@ function App() {
               handleRemoveTodo={handleRemoveTodo}
               handleToggleTodo={handleToggleTodo}
               filterTodos={filterTodos}
+              handleDragOver={handleDragOver}
+              handleDrop={handleDrop}
+              handleDragStart={handleDragStart}
+              handleDragEnd={handleDragEnd}
+              draggedTodo={draggedTodo}
             />
 
             <div className="info">
