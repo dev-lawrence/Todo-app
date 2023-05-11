@@ -23,6 +23,7 @@ function App() {
   const [filter, setFilter] = useState('all');
   const [draggedTodo, setDraggedTodo] = useState(null);
   const todoNameRef = useRef();
+  const touchStartPositionRef = useRef(null);
 
   //  save the data when changes are made
   useEffect(() => {
@@ -110,6 +111,44 @@ function App() {
     setDraggedTodo(null);
   };
 
+  // handle touch start
+  const handleTouchStart = (event, todo) => {
+    setDraggedTodo(todo);
+    touchStartPositionRef.current = event.touches[0].clientY;
+    // console.log('start');
+  };
+
+  // handle touch move
+  const handleTouchMove = (event) => {
+    if (!draggedTodo) return;
+    const touchPosition = event.touches[0].clientY;
+    const touchDifference = touchPosition - touchStartPositionRef.current;
+    const draggedIndex = todos.findIndex((t) => t.id === draggedTodo.id);
+    const targetIndex = Math.max(
+      0,
+      Math.min(
+        draggedIndex + Math.round(touchDifference / 60),
+        todos.length - 1
+      )
+    );
+
+    if (targetIndex !== draggedIndex) {
+      const newTodos = [...todos];
+      newTodos.splice(draggedIndex, 1);
+      newTodos.splice(targetIndex, 0, draggedTodo);
+      setTodos(newTodos);
+    }
+    // console.log('move');
+  };
+
+  // handle touch end
+  const handleTouchEnd = () => {
+    setDraggedTodo(null);
+    touchStartPositionRef.current = null;
+
+    // console.log('end');
+  };
+
   return (
     <>
       <header className="header">
@@ -156,6 +195,9 @@ function App() {
               handleDragStart={handleDragStart}
               handleDragEnd={handleDragEnd}
               draggedTodo={draggedTodo}
+              handleTouchStart={handleTouchStart}
+              handleTouchMove={handleTouchMove}
+              handleTouchEnd={handleTouchEnd}
             />
 
             <div className="info">

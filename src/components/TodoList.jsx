@@ -8,6 +8,9 @@ const TodoList = ({
   handleDragOver,
   handleDrop,
   handleDragEnd,
+  handleTouchStart,
+  handleTouchMove,
+  handleTouchEnd,
 }) => {
   return (
     <>
@@ -23,6 +26,9 @@ const TodoList = ({
               handleDragOver={handleDragOver}
               handleDrop={handleDrop}
               handleDragEnd={handleDragEnd}
+              handleTouchStart={handleTouchStart}
+              handleTouchMove={handleTouchMove}
+              handleTouchEnd={handleTouchEnd}
             />
           );
         })}

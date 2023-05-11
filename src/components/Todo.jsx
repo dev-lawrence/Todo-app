@@ -9,6 +9,9 @@ const Todo = ({
   handleDrop,
   handleDragEnd,
   draggedTodo,
+  handleTouchStart,
+  handleTouchMove,
+  handleTouchEnd,
 }) => {
   return (
     <>
@@ -18,9 +21,10 @@ const Todo = ({
         onDragOver={handleDragOver}
         onDrop={(event) => handleDrop(event, todo)}
         onDragEnd={handleDragEnd}
-        className={`todo ${todo.isComplete ? 'complete' : ''} ${
-          draggedTodo && draggedTodo.id === todo.id ? 'dragged' : ''
-        }`}
+        onTouchStart={(event) => handleTouchStart(event, todo)}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className={`todo ${todo.isComplete ? 'complete' : ''} `}
       >
         <div className="flex">
           <input
