@@ -225,6 +225,7 @@ body {
     }
   }
 
+  // filter todo
   .filter-todo {
     @include flex(space-evenly);
     margin-top: rem(20);
@@ -271,4 +272,13 @@ body {
   text-align: center;
   font-size: rem(14);
   padding: 3rem 1rem 1rem;
+}
+
+// Media queries
+@media (max-width: 320px) {
+  .main {
+    .filter-todo {
+      padding: rem(16) 0;
+    }
+  }
 }
