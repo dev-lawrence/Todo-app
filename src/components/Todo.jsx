@@ -8,7 +8,6 @@ const Todo = ({
   handleDragOver,
   handleDrop,
   handleDragEnd,
-  draggedTodo,
   handleTouchStart,
   handleTouchMove,
   handleTouchEnd,

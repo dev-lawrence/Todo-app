@@ -1,11 +1,11 @@
 import bgDark from '../assets/bg-mobile-light.jpg';
 import bgLight from '../assets/bg-mobile-dark.jpg';
 
-const ToggleBg = ({ darkmode }) => {
+const ToggleBg = ({ darkMode }) => {
   return (
     <>
       <div className="header__bg">
-        <img src={darkmode ? bgDark : bgLight} alt="background" />
+        <img src={darkMode ? bgDark : bgLight} alt="background" />
       </div>
     </>
   );

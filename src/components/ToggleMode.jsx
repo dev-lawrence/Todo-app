@@ -4,9 +4,9 @@ import iconSun from '../assets/icon-sun.svg';
 
 const storeMode = localStorage.getItem('mode');
 
-const Togglemode = ({ darkmode, setDarkMode }) => {
+const Togglemode = ({ darkMode, setDarkMode }) => {
   const handleToggleMode = () => {
-    if (!darkmode) {
+    if (!darkMode) {
       enableDarkMode();
     } else {
       enableLightMode();
@@ -36,7 +36,7 @@ const Togglemode = ({ darkmode, setDarkMode }) => {
   return (
     <>
       <div onClick={handleToggleMode} className="toggle-switch">
-        <img src={darkmode ? iconMoon : iconSun} alt="Mode button" />
+        <img src={darkMode ? iconMoon : iconSun} alt="Mode button" />
       </div>
     </>
   );

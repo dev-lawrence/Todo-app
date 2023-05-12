@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ToggleBg from './components/ToggleBg';
 import Togglemode from './components/ToggleMode';
 import TodoList from './components/TodoList';
@@ -6,20 +6,12 @@ import './sass/main.scss';
 
 const LOCAL_STORAGE_KEY = 'mytodo.todos';
 
-// load the todos to UI
-const storedTodos = () => {
-  let showStoredTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
-
-  if (showStoredTodos) {
-    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  } else {
-    return [];
-  }
-};
-
 function App() {
-  const [darkmode, setDarkMode] = useState(false);
-  const [todos, setTodos] = useState(storedTodos());
+  const [darkMode, setDarkMode] = useState(false);
+  const [todos, setTodos] = useState(() => {
+    const storedTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  });
   const [filter, setFilter] = useState('all');
   const [draggedTodo, setDraggedTodo] = useState(null);
   const todoNameRef = useRef();
@@ -30,7 +22,7 @@ function App() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  // add todo
+  // function to add todo
   const handleAddTodo = (event) => {
     event.preventDefault();
     const name = todoNameRef.current.value;
@@ -50,12 +42,12 @@ function App() {
     todoNameRef.current.value = null;
   };
 
-  // remove todo
+  // function to remove todo
   const handleRemoveTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  // toggle todo
+  // function to toggle todo
   const handleToggleTodo = (id) => {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
@@ -115,7 +107,6 @@ function App() {
   const handleTouchStart = (event, todo) => {
     setDraggedTodo(todo);
     touchStartPositionRef.current = event.touches[0].clientY;
-    // console.log('start');
   };
 
   // handle touch move
@@ -138,21 +129,18 @@ function App() {
       newTodos.splice(targetIndex, 0, draggedTodo);
       setTodos(newTodos);
     }
-    // console.log('move');
   };
 
   // handle touch end
   const handleTouchEnd = () => {
     setDraggedTodo(null);
     touchStartPositionRef.current = null;
-
-    // console.log('end');
   };
 
   return (
     <>
       <header className="header">
-        <ToggleBg darkmode={darkmode} />
+        <ToggleBg darkMode={darkMode} />
       </header>
 
       <main className="main">
@@ -161,7 +149,7 @@ function App() {
             <a className="logo" href="#">
               Todo
             </a>
-            <Togglemode darkmode={darkmode} setDarkMode={setDarkMode} />
+            <Togglemode darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
 
           <div className="main__content">
