@@ -142,7 +142,6 @@ function App() {
       <header className="header">
         <ToggleBg darkMode={darkMode} />
       </header>
-
       <main className="main">
         <div className="main__container">
           <div className="main__title">
