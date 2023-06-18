@@ -171,7 +171,7 @@ function App() {
               </form>
             </div>
 
-            {/* <!-- todos use todo as the classname --> */}
+            {/* <!-- todos use todo as the className --> */}
             <TodoList
               todos={todos}
               handleRemoveTodo={handleRemoveTodo}
