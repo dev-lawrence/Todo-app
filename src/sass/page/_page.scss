@@ -121,6 +121,8 @@ body {
     margin-top: rem(18);
     background-color: var(--todo-bg);
     border-radius: rem(4.8);
+    overflow-y: auto;
+    max-height: rem(320);
 
     .todo {
       @include flex(space-between);
@@ -128,6 +130,7 @@ body {
       border-bottom: 1px solid var(--border-clr);
       width: 100%;
       padding: rem(16);
+      cursor: grab;
 
       span {
         margin-left: 1rem;
