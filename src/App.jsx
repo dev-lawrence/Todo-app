@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ToggleBg from './components/ToggleBg';
-import Togglemode from './components/ToggleMode';
+import ToggleMode from './components/ToggleMode';
 import TodoList from './components/TodoList';
 import './sass/main.scss';
 
@@ -148,7 +148,7 @@ function App() {
             <a className="logo" href="#">
               Todo
             </a>
-            <Togglemode darkMode={darkMode} setDarkMode={setDarkMode} />
+            <ToggleMode darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
 
           <div className="main__content">
